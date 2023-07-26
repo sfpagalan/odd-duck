@@ -2,12 +2,13 @@ html, body {
     height: 100%;
     width: 1189px;
     font-family: 'Mali', cursive;
-    background-color: #f7f7f7;
+    background-color: #fff;
     color: #333;
     text-align: center;
     margin: 0;
     padding: 0;
-  }
+    cursor: url("img/duck-pointer.png"), auto;
+}
   
   body {
     display: flex;
@@ -22,12 +23,25 @@ html, body {
   }
   
   h2 {
-    color: #004466;
+    color: #ff9900;
+    text-align: center;
+  }
+
+  h3 {
+    text-align: center;
   }
   
   p {
+    text-align: left;
     font-size: 18px;
     line-height: 1.6;
+    gap: 15px;
+    text-indent: 40px;
+    margin: 0;
+  }
+
+  span {
+    text-decoration: underline;
   }
 
   .description {
@@ -35,6 +49,7 @@ html, body {
     text-align: left;
     align-self: center;
     margin: 20px;
+    margin-bottom: -20px;
   }
   
   section {
@@ -51,22 +66,24 @@ html, body {
     margin-top: 20px;
   }
   
-  #productSection img {
-    max-width: 100%;
-    height: auto;
-  }
-  
   img {
     width: 300px;
     height: 300px;
-    margin: 5px;
+    margin: 10px;
     border-radius: 10px;
-    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
-    cursor: pointer;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+    cursor: url("img/duck-knife.png"), auto;
+    filter: brightness(1.1) contrast(1.1);
   }
   
+  img:hover {
+    transform: scale(1.05);
+  }
+
   button {
-    background-color: #ff9900;
+    font-family: 'Mali', cursive;
+    background-image: url(img/duckButton.jpeg);
+    background-size: cover;
     color: #fff;
     border: none;
     align-self: center;
@@ -75,12 +92,15 @@ html, body {
     width: 170px;
     margin: 10px;
     border-radius: 5px;
-    cursor: pointer;
+    cursor: url("img/duck-knife.png"), auto;
     transition: background-color 0.3s;
+    position: relative;
+    z-index: 1;
   }
   
   button:hover {
-    background-color: #e67300;
+    background-color: #ce6b08;
+    box-shadow: inset 0 0 0 1000px rgba(0, 0, 0, 0.5);
   }
   
   #resultsList {
