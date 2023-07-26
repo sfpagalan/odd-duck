@@ -5,114 +5,173 @@ function Product(name, imagePath) {
     this.timesClicked = 0;
   }
   
-  const products = [
-    new Product("BAG", "img/bag.jpg"),
-    new Product("BANANA", "img/banana.jpg"),
-    new Product("BATHROOM", "img/bathroom.jpg"),
-    new Product("BOOTS", "img/boots.jpg"),
-    new Product("BREAKFAST", "img/breakfast.jpg"),
-    new Product("BUBBLEGUM", "img/bubblegum.jpg"),
-    new Product("CHAIR", "img/chair.jpg"),
-    new Product("CTHULHU", "img/cthulhu.jpg"),
-    new Product("DOG-DUCK", "img/dog-duck.jpg"),
-    new Product("DRAGON", "img/dragon.jpg"),
-    new Product("PEN", "img/pen.jpg"),
-    new Product("PET SWEEP", "img/pet-sweep.jpg"),
-    new Product("SCISSORS", "img/scissors.jpg"),
-    new Product("SHARK", "img/shark.jpg"),
-    new Product("SWEEP", "img/sweep.png"),
-    new Product("TAUNTAUN", "img/tauntaun.jpg"),
-    new Product("UNIFORN", "img/unicorn.jpg"),
-    new Product("WATER CAN", "img/water-can.jpg"),
-    new Product("WINE GLASS", "img/wine-glass.jpg"),
-  ];
+const products = [
+  new Product("BAG", "img/bag.jpg"),
+  new Product("BANANA", "img/banana.jpg"),
+  new Product("BATHROOM", "img/bathroom.jpg"),
+  new Product("BOOTS", "img/boots.jpg"),
+  new Product("BREAKFAST", "img/breakfast.jpg"),
+  new Product("BUBBLEGUM", "img/bubblegum.jpg"),
+  new Product("CHAIR", "img/chair.jpg"),
+  new Product("CTHULHU", "img/cthulhu.jpg"),
+  new Product("DOG-DUCK", "img/dog-duck.jpg"),
+  new Product("DRAGON", "img/dragon.jpg"),
+  new Product("PEN", "img/pen.jpg"),
+  new Product("PET SWEEP", "img/pet-sweep.jpg"),
+  new Product("SCISSORS", "img/scissors.jpg"),
+  new Product("SHARK", "img/shark.jpg"),
+  new Product("SWEEP", "img/sweep.png"),
+  new Product("TAUNTAUN", "img/tauntaun.jpg"),
+  new Product("UNIFORN", "img/unicorn.jpg"),
+  new Product("WATER CAN", "img/water-can.jpg"),
+  new Product("WINE GLASS", "img/wine-glass.jpg"),
+];
   
-  const maxRounds = 25;
-  let totalVotes = 0;
+  let totalSelections = 0;
   
-  function getRandomNumber(min, max) {
-    return Math.floor(Math.random() * (max - min) + min);
+  function getRandomIndex(min, max) {
+    return Math.floor(Math.random() * (max - min + 1)) + min;
   }
   
-  function displayProducts() {
-    const productsContainer = document.getElementById("products-container");
-    productsContainer.innerHTML = "";
-  
-    const selectedProducts = [];
-    while (selectedProducts.length < 3) {
-      const randomIndex = getRandomNumber(0, products.length);
-      if (!selectedProducts.includes(randomIndex)) {
-        selectedProducts.push(randomIndex);
-        products[randomIndex].timesShown++;
-      }
+  function displayThreeRandomProducts() {
+    if (totalSelections >= 25) {
+      viewResults();
+      return;
     }
   
-    selectedProducts.forEach((index) => {
-      const product = products[index];
-      const imgElement = document.createElement("img");
-      imgElement.src = product.imagePath;
-      imgElement.alt = product.name;
-      imgElement.addEventListener("click", () => {
-        product.timesClicked++;
-        if (totalVotes < maxRounds) {
-            product.timesClicked++;
-            totalVotes++;
-            console.log(`${product.name} - Times Seen: ${product.timesShown}, Times Clicked: ${product.timesClicked}`);
-            if (totalVotes === maxRounds) {
-              const viewResultsBtn = document.getElementById("view-results-btn");
-              viewResultsBtn.style.display = "block";
-              alert("You have completed all 25 rounds of voting!");
-              disableClickListeners();
-              displayTopThreeProducts();
-            }
-            displayProducts();
-          } else {
-            alert("You cannot vote anymore. Voting is done!");
-          }
-        });
-        productsContainer.appendChild(imgElement);
-      });
-    }
-
-    function disableClickListeners() {
-        const imgElements = document.querySelectorAll("#products-container img");
-        imgElements.forEach((img) => {
-          img.removeEventListener("click", () => {});
-        });
+    const productSection = document.getElementById('productSection');
+    productSection.innerHTML = '';
+  
+    const uniqueProductIndices = [];
+    while (uniqueProductIndices.length < 3) {
+      const randomIndex = getRandomIndex(0, products.length - 1);
+      if (!uniqueProductIndices.includes(randomIndex)) {
+        uniqueProductIndices.push(randomIndex);
+        const product = products[randomIndex];
+        product.timesShown++;
+        const productElement = document.createElement('img');
+        productElement.src = product.imagePath;
+        productElement.alt = product.name;
+        productElement.addEventListener('click', () => handleProductClick(product));
+  
+        productSection.appendChild(productElement);
       }
-
-    function displayTopThreeProducts() {
-        const topThreeProducts = [...products].sort((a, b) => b.timesClicked - a.timesClicked).slice(0, 3);
-        const topThreeContainer = document.getElementById("top-three-container");
-        topThreeContainer.innerHTML = "";
-      
-        topThreeProducts.forEach((product) => {
-          const productElement = document.createElement("p");
-          productElement.textContent = `${product.name} - Votes: ${product.timesClicked}`;
-          topThreeContainer.appendChild(productElement);
-        });
     }
-    
-    const viewResultsBtn = document.getElementById("view-results-btn");
-    viewResultsBtn.addEventListener("click", () => {
-    const resultsContainer = document.getElementById("results-container");
-    resultsContainer.innerHTML = "";
-
-    products.forEach((product) => {
-      const resultText = document.createElement("p");
-      resultText.textContent = `${product.name} had ${product.timesClicked} votes`;
-      resultsContainer.appendChild(resultText);
+  }
+  
+  function handleProductClick(product) {
+    product.timesClicked++;
+    totalSelections++;
+    displayThreeRandomProducts();
+    if (totalSelections >= 25) {
+      viewResults();
+    }
+  }
+  
+  function calculatePercentage(clicked, shown) {
+    return ((clicked / shown) * 100).toFixed(2);
+  }
+  
+  function resetVotes() {
+    products.forEach(product => {
+      product.timesShown = 0;
+      product.timesClicked = 0;
     });
-
-    const totalVotesElement = document.createElement("p");
-    totalVotesElement.textContent = `Total Votes: ${totalVotes}`;
-    resultsContainer.appendChild(totalVotesElement);
+    totalSelections = 0;
+    displayThreeRandomProducts();
+  }
   
-    const productsContainer = document.getElementById("products-container");
-    productsContainer.style.display = "none";
-    viewResultsBtn.style.display = "none";
-    resultsContainer.style.display = "block";
-  });
+  const resetButton = document.getElementById('resetButton');
+  resetButton.addEventListener('click', resetVotes);
+  
+  function viewResultsList() {
+    const resultsList = document.getElementById('resultsList');
+    resultsList.innerHTML = '';
+  
+    products.forEach(product => {
+      const listItem = document.createElement('li');
+      listItem.textContent = `${product.name} had ${product.timesClicked} votes, and was seen ${product.timesShown} times.`;
+      resultsList.appendChild(listItem);
+    });
+  
+    resultsList.style.display = 'block';
+    const chartSection = document.getElementById('chartSection');
+    chartSection.style.display = 'block';
+  }
+  
+  function hideResultsList() {
+    const resultsList = document.getElementById('resultsList');
+    resultsList.style.display = 'none';
+  }
+  
+  
+  const viewResultsButton = document.getElementById('viewResults');
+  viewResultsButton.addEventListener('click', viewResultsList);
+  
+  const resultsList = document.getElementById('resultsList');
+  resultsList.addEventListener('click', hideResultsList);
+  
+  displayThreeRandomProducts();
+  
+  let myChart = null;
 
-  displayProducts();
+  function viewResults() {
+    // Sort products based on votes received (least to most)
+    products.sort((a, b) => a.timesClicked - b.timesClicked);
+  
+    const productNames = [];
+    const votesReceived = [];
+    const timesSeen = [];
+    const clickPercentage = [];
+  
+    products.forEach(product => {
+      productNames.push(product.name);
+      votesReceived.push(product.timesClicked);
+      timesSeen.push(product.timesShown);
+      clickPercentage.push(calculatePercentage(product.timesClicked, product.timesShown));
+    });
+  
+    const chartCanvas = document.getElementById('chart');
+    if (myChart) {
+        myChart.destroy();
+      }
+    
+      myChart = new Chart(chartCanvas, {
+      type: 'bar',
+      data: {
+        labels: productNames,
+        datasets: [
+          {
+            label: 'Votes Received',
+            data: votesReceived,
+            backgroundColor: 'rgba(75, 192, 192, 0.2)',
+            borderColor: 'rgba(75, 192, 192, 1)',
+            borderWidth: 1
+          },
+          {
+            label: 'Times Seen',
+            data: timesSeen,
+            backgroundColor: 'rgba(153, 102, 255, 0.2)',
+            borderColor: 'rgba(153, 102, 255, 1)',
+            borderWidth: 1
+          },
+          {
+            label: 'Click Percentage',
+            data: clickPercentage,
+            backgroundColor: 'rgba(255, 99, 132, 0.2)',
+            borderColor: 'rgba(255, 99, 132, 1)',
+            borderWidth: 1
+          }
+        ]
+      },
+      options: {
+        indexAxis: 'y', // Display horizontally
+        scales: {
+          y: {
+            beginAtZero: true
+          }
+        }
+      }
+    });
+  }
   
