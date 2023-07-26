@@ -3,30 +3,20 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Product Voting App</title>
-    <link rel="stylesheet" href="styles.css">
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Rowdies:wght@300&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Mali:wght@300;500&display=swap" rel="stylesheet">
+    <title>Product Voting System</title>
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    <link rel="stylesheet" href="styles.css">
 </head>
 <body>
-  <div class="container">
-    <div class="header">
-      <div class="logo">
-        <img src="placeholder">
-      </div>
-      <div class="title">Product Voting App</div>
-    </div>
-    <div class="side">
-      <div class="product-results" id="results-container"></div>
-      <button id="view-results-btn">View Results</button>
-    </div>
-    <div class="content1">
-      <div class="product-images" id="products-container"></div>
-    </div>
-    <div class="content2">
-        <div class="description-box">
-            <h2>📢 Company Announcement: Help Us Choose the Next Breakthrough Product!</h2>
+    <h1>Product Voting System</h1>
+    <section id="productSection">
+        <!-- products will be added here -->
+    </section>
+    <section class="description">
+        <h2>📢 Company Announcement: Help Us Choose the Next Breakthrough Product!</h2>
             <br>
             <h3>Attention Team Members of Odd Duck Product Co.</h3>
             <p>We are thrilled to involve you in a crucial decision that will shape the future of our company!
@@ -40,22 +30,16 @@
             <br>
             <br>         
             Stay tuned for the results, and let's chart the course for the next chapter of Odd Duck Product Co. together!</p>
-        </div>
-      </div>
-      <div class="content3">
-        <div class="content3-title">
-            <h4>The top three products:</h4>
-        </div>
-        <div class="top-three" id="top-three-container">
-            <!-- Top three products go here -->
-        </div>
-      </div>
-    <div class="footer">
-      <!-- Footer content goes here -->
-    </div>
-  </div>
-  <!-- <button id="view-results-btn" style="display: none;">View Results</button>
-  <div id="results-container" style="display: none;"></div> -->
-  <script src="app.js"></script>
+    </section>
+    <button id="viewResults">View Results</button>
+    <button id="resetButton">Reset</button>
+    <section id="resultsList" style="display: none;">
+        <h2>Results List:</h2>
+        <ul></ul>
+      </section>
+    <section id="chartSection">
+    <canvas id="chart"></canvas>
+    </section>
+    <script src="app.js"></script>
 </body>
 </html>
