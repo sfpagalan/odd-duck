@@ -147,13 +147,11 @@ function viewResults() {
   const productNames = [];
   const votesReceived = [];
   const timesSeen = [];
-  const clickPercentage = [];
 
   products.forEach(product => {
     productNames.push(product.name);
     votesReceived.push(product.timesClicked);
     timesSeen.push(product.timesShown);
-    clickPercentage.push(calculatePercentage(product.timesClicked, product.timesShown));
   });
 
   const chartCanvas = document.getElementById('chart');
@@ -180,17 +178,10 @@ function viewResults() {
           borderColor: 'rgba(153, 102, 255, 1)',
           borderWidth: 1
         },
-        {
-          label: 'Click Percentage',
-          data: clickPercentage,
-          backgroundColor: 'rgba(255, 99, 132, 0.2)',
-          borderColor: 'rgba(255, 99, 132, 1)',
-          borderWidth: 1
-        }
       ]
     },
     options: {
-      indexAxis: 'y', // display horizontally
+      indexAxis: 'x', // display vertically. put 'y' for horizontally
       scales: {
         y: {
           beginAtZero: true
