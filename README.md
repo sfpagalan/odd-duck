@@ -5,3 +5,6 @@
 
 ## Lab 13 LightHouse
 ![lab 13 Lighthouse](img/lab13lighthouse.png)
+
+## Lab 15 Lighthouse
+![Lab 15 Lighthouse](img/lab15lighthouse.png)
